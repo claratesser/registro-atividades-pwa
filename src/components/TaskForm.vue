@@ -11,17 +11,21 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, watch } from "vue";
+import tasksApi from "../api/tasksApi.js";
 
-const emit = defineEmits(['add']);
-const newTask = ref('');
+const props = defineProps({
+  editingTask: {
+    type: Object,
+    default: null,
+  },
+});
 
-function handleSubmit() {
-  if (newTask.value.trim()) {
-    emit('add', newTask.value);
-    newTask.value = '';
-  }
-}
+const emit = defineEmits(["add", "update", "cancel"]);
+const newTask = ref("");
+const previewUrl = ref(null);
+const imgAttachmentKey = ref(null);
+const uploading = ref(false);
 </script>
 
 <style scoped>
@@ -60,3 +64,5 @@ function handleSubmit() {
   background-color: #357abd;
 }
 </style>
+watch( () => props.editingTask, (task) => { newTask.value = task ? task.title : '';
+previewUrl.value = null; imgAttachmentKey.value = null; }, );
