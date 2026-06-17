@@ -14,18 +14,12 @@ export function useTasks() {
 
   function addTask(title) {
     if (!title.trim()) return;
-    tasks.value.push({
-      id: nextId++,
-      title: title.trim(),
-      done: false,
-    });
+    tasks.value.push({ id: nextId++, title: title.trim(), done: false });
   }
 
   function toggleTask(id) {
     const task = tasks.value.find((t) => t.id === id);
-    if (task) {
-      task.done = !task.done;
-    }
+    if (task) task.done = !task.done;
   }
 
   function removeTask(id) {

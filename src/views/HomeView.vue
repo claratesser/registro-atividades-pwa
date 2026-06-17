@@ -13,9 +13,7 @@
 
     <template v-else>
       <section v-if="store.pendingTasks.length > 0">
-        <h2 class="section-title">
-          Pendentes ({{ store.pendingTasks.length }})
-        </h2>
+        <h2 class="section-title">Pendentes ({{ store.pendingTasks.length }})</h2>
         <TaskItem
           v-for="task in store.pendingTasks"
           :key="task.id"
@@ -27,9 +25,7 @@
       </section>
 
       <section v-if="store.completedTasks.length > 0">
-        <h2 class="section-title">
-          Concluídas ({{ store.completedTasks.length }})
-        </h2>
+        <h2 class="section-title">Concluídas ({{ store.completedTasks.length }})</h2>
         <TaskItem
           v-for="task in store.completedTasks"
           :key="task.id"
@@ -50,11 +46,11 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue';
-import TaskForm from '../components/TaskForm.vue';
-import TaskItem from '../components/TaskItem.vue';
-//import InstallButton from '../components/InstallButton.vue';
-import { useTasksStore } from '../stores/tasks.js';
+import { onMounted, ref } from "vue";
+import TaskForm from "../components/TaskForm.vue";
+import TaskItem from "../components/TaskItem.vue";
+import InstallButton from "../components/InstallButton.vue";
+import { useTasksStore } from "../stores/tasks.js";
 
 const store = useTasksStore();
 const editingTask = ref(null);
@@ -67,8 +63,8 @@ function handleAdd(title) {
   store.addTask(title);
 }
 
-function handleUpdate(id, title) {
-  store.updateTaskTitle(id, title);
+function handleUpdate(id, title, imgAttachmentKey) {
+  store.updateTask(id, { title, imgAttachmentKey });
   editingTask.value = null;
 }
 
