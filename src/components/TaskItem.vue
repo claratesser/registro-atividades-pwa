@@ -6,13 +6,25 @@
       class="task-thumbnail"
       alt="Imagem da tarefa"
     />
+
     <label class="task-label">
-      <input type="checkbox" :checked="task.done" @change="$emit('toggle', task.id)" />
+      <input
+        type="checkbox"
+        :checked="task.done"
+        @change="$emit('toggle', task.id)"
+      />
+
       <span class="task-title">{{ task.title }}</span>
     </label>
+
     <div class="task-actions">
-      <button class="task-edit" @click="$emit('edit', task)">Editar</button>
-      <button class="task-remove" @click="$emit('remove', task.id)">Remover</button>
+      <button class="task-edit" @click="$emit('edit', task)">
+        Editar
+      </button>
+
+      <button class="task-remove" @click="$emit('remove', task.id)">
+        Remover
+      </button>
     </div>
   </div>
 </template>
@@ -35,9 +47,10 @@ defineEmits(["toggle", "remove", "edit"]);
   align-items: center;
   padding: 12px;
   background-color: white;
+  border: 1px solid #f2d5dd;
   border-radius: 8px;
   margin-bottom: 8px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 3px rgba(130, 61, 82, 0.08);
   transition: opacity 0.2s;
   gap: 10px;
 }
@@ -47,12 +60,13 @@ defineEmits(["toggle", "remove", "edit"]);
   height: 44px;
   object-fit: cover;
   border-radius: 6px;
-  border: 1px solid #eee;
+  border: 1px solid #f0ccd6;
   flex-shrink: 0;
 }
 
 .task-item.done {
   opacity: 0.6;
+  background-color: #fff8fa;
 }
 
 .task-label {
@@ -66,22 +80,23 @@ defineEmits(["toggle", "remove", "edit"]);
 .task-label input[type="checkbox"] {
   width: 20px;
   height: 20px;
-  accent-color: #4a90d9;
+  accent-color: #d85c82;
 }
 
 .task-title {
   font-size: 1rem;
+  color: #573b44;
 }
 
 .task-item.done .task-title {
   text-decoration: line-through;
-  color: #999;
+  color: #aa8791;
 }
 
 .task-remove {
   background: none;
   border: none;
-  color: #e74c3c;
+  color: #c33f60;
   cursor: pointer;
   font-size: 0.85rem;
   padding: 4px 8px;
@@ -100,7 +115,7 @@ defineEmits(["toggle", "remove", "edit"]);
 .task-edit {
   background: none;
   border: none;
-  color: #4a90d9;
+  color: #c65378;
   cursor: pointer;
   font-size: 0.85rem;
   padding: 4px 8px;

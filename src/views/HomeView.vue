@@ -89,22 +89,24 @@ function handleRemove(id) {
 <style scoped>
 .section-title {
   font-size: 1rem;
-  color: #666;
+  color: #a94468;
   margin-bottom: 12px;
   margin-top: 20px;
+  padding-bottom: 6px;
+  border-bottom: 2px solid #f0ccd6;
 }
 
 .empty-message {
   text-align: center;
-  color: #999;
+  color: #9a7580;
   margin-top: 40px;
   font-size: 0.95rem;
 }
 
 .error-message {
-  color: #c0392b;
-  background-color: #fdecea;
-  border: 1px solid #e74c3c;
+  color: #b4234d;
+  background-color: #fff0f4;
+  border: 1px solid #efb6c7;
   border-radius: 6px;
   padding: 10px 14px;
   margin-bottom: 12px;
@@ -112,7 +114,7 @@ function handleRemove(id) {
 }
 
 .loading-message {
-  color: #666;
+  color: #8b6672;
   font-size: 0.9rem;
   padding: 8px 0;
 }

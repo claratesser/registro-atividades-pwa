@@ -7,9 +7,11 @@
         placeholder="Nova tarefa..."
         class="task-input"
       />
+
       <button type="submit" class="task-button" :disabled="uploading">
         {{ editingTask ? "Alterar" : "Adicionar" }}
       </button>
+
       <button
         v-if="editingTask"
         type="button"
@@ -21,34 +23,39 @@
     </div>
 
     <div class="image-section">
-  <img
-    v-if="previewUrl || editingTask?.img_url"
-    :src="previewUrl || editingTask?.img_url"
-    class="image-preview"
-    alt="Imagem da tarefa"
-  />
-  <label class="image-label" :class="{ disabled: uploading }">
-    <span v-if="uploading" class="upload-status">Enviando...</span>
-    <span v-else>
-      {{ previewUrl || editingTask?.img_url
-        ? 'Trocar imagem'
-        : 'Adicionar imagem'
-      }}
-    </span>
-    <input
-      type="file"
-      accept="image/jpeg,image/png"
-      capture="environment"
-      class="image-input"
-      :disabled="uploading"
-      @change="handleImageChange"
-    />
-  </label>
-   <p class="image-help">
-    Em celular, o botão pode abrir a câmera.
-    Em notebook, abre o seletor de arquivos.
-  </p>
-</div>
+      <img
+        v-if="previewUrl || editingTask?.img_url"
+        :src="previewUrl || editingTask?.img_url"
+        class="image-preview"
+        alt="Imagem da tarefa"
+      />
+
+      <label class="image-label" :class="{ disabled: uploading }">
+        <span v-if="uploading" class="upload-status">Enviando...</span>
+
+        <span v-else>
+          {{
+            previewUrl || editingTask?.img_url
+              ? "Trocar imagem"
+              : "Adicionar imagem"
+          }}
+        </span>
+
+        <input
+          type="file"
+          accept="image/jpeg,image/png"
+          capture="environment"
+          class="image-input"
+          :disabled="uploading"
+          @change="handleImageChange"
+        />
+      </label>
+
+      <p class="image-help">
+        Em celular, o botão pode abrir a câmera.
+        Em notebook, abre o seletor de arquivos.
+      </p>
+    </div>
   </form>
 </template>
 
@@ -64,6 +71,7 @@ const props = defineProps({
 });
 
 const emit = defineEmits(["add", "update", "cancel"]);
+
 const newTask = ref("");
 const previewUrl = ref(null);
 const imgAttachmentKey = ref(null);
@@ -72,20 +80,29 @@ const uploading = ref(false);
 watch(
   () => props.editingTask,
   (task) => {
-    newTask.value = task ? task.title : '';
-    if (previewUrl.value) URL.revokeObjectURL(previewUrl.value);
+    newTask.value = task ? task.title : "";
+
+    if (previewUrl.value) {
+      URL.revokeObjectURL(previewUrl.value);
+    }
+
     previewUrl.value = null;
     imgAttachmentKey.value = null;
   },
 );
 
-
 async function handleImageChange(event) {
   const file = event.target.files[0];
+
   if (!file) return;
-  if (previewUrl.value) URL.revokeObjectURL(previewUrl.value);
+
+  if (previewUrl.value) {
+    URL.revokeObjectURL(previewUrl.value);
+  }
+
   previewUrl.value = URL.createObjectURL(file);
   uploading.value = true;
+
   try {
     const response = await tasksApi.uploadImage(file);
     imgAttachmentKey.value = response.data.attachment_key;
@@ -107,29 +124,42 @@ function handleSubmit() {
   };
 
   if (props.editingTask) {
-    emit('update', props.editingTask.id, payload);
+    emit("update", props.editingTask.id, payload);
   } else {
-    emit('add', payload);
+    emit("add", payload);
   }
 
-  newTask.value = '';
-  if (previewUrl.value) URL.revokeObjectURL(previewUrl.value);
+  newTask.value = "";
+
+  if (previewUrl.value) {
+    URL.revokeObjectURL(previewUrl.value);
+  }
+
   previewUrl.value = null;
   imgAttachmentKey.value = null;
 }
 
 function handleCancel() {
-  newTask.value = '';
-  if (previewUrl.value) URL.revokeObjectURL(previewUrl.value);
+  newTask.value = "";
+
+  if (previewUrl.value) {
+    URL.revokeObjectURL(previewUrl.value);
+  }
+
   previewUrl.value = null;
   imgAttachmentKey.value = null;
-  emit('cancel');
+
+  emit("cancel");
 }
 </script>
 
 <style scoped>
 .task-form {
   margin-bottom: 24px;
+  padding: 14px;
+  background-color: #fffafb;
+  border: 1px solid #f0ccd6;
+  border-radius: 8px;
 }
 
 .task-row {
@@ -141,7 +171,7 @@ function handleCancel() {
 .task-input {
   flex: 1;
   padding: 12px;
-  border: 2px solid #ddd;
+  border: 2px solid #f0ccd6;
   border-radius: 8px;
   font-size: 1rem;
   outline: none;
@@ -149,12 +179,12 @@ function handleCancel() {
 }
 
 .task-input:focus {
-  border-color: #4a90d9;
+  border-color: #d85c82;
 }
 
 .task-button {
   padding: 12px 20px;
-  background-color: #4a90d9;
+  background-color: #da7799;
   color: white;
   border: none;
   border-radius: 8px;
@@ -164,7 +194,7 @@ function handleCancel() {
 }
 
 .task-button:hover:not(:disabled) {
-  background-color: #357abd;
+  background-color: #b8476a;
 }
 
 .task-button:disabled {
@@ -175,8 +205,8 @@ function handleCancel() {
 .task-button-cancel {
   padding: 12px 16px;
   background-color: transparent;
-  color: #666;
-  border: 2px solid #ddd;
+  color: #8b6672;
+  border: 2px solid #f0ccd6;
   border-radius: 8px;
   font-size: 1rem;
   cursor: pointer;
@@ -184,7 +214,7 @@ function handleCancel() {
 }
 
 .task-button-cancel:hover {
-  border-color: #aaa;
+  border-color: #dca4b5;
 }
 
 .image-section {
@@ -192,9 +222,10 @@ function handleCancel() {
   align-items: center;
   gap: 12px;
   padding: 10px 12px;
-  background: #f8f9fa;
+  background: #fff3f6;
   border-radius: 8px;
-  border: 1px dashed #ccc;
+  border: 1px dashed #e4aebf;
+  flex-wrap: wrap;
 }
 
 .image-preview {
@@ -202,7 +233,7 @@ function handleCancel() {
   height: 56px;
   object-fit: cover;
   border-radius: 6px;
-  border: 1px solid #ddd;
+  border: 1px solid #f0ccd6;
   flex-shrink: 0;
 }
 
@@ -212,8 +243,8 @@ function handleCancel() {
   gap: 6px;
   padding: 8px 14px;
   background: white;
-  border: 1.5px solid #4a90d9;
-  color: #4a90d9;
+  border: 1.5px solid #d85c82;
+  color: #c24c72;
   border-radius: 6px;
   font-size: 0.875rem;
   cursor: pointer;
@@ -221,7 +252,7 @@ function handleCancel() {
 }
 
 .image-label:hover:not(.disabled) {
-  background: #eaf2fb;
+  background: #ffeaf0;
 }
 
 .image-label.disabled {
@@ -232,13 +263,15 @@ function handleCancel() {
 .image-input {
   display: none;
 }
+
 .image-help {
   font-size: 0.75rem;
-  color: #999;
+  color: #a88690;
   margin: 0;
   flex-basis: 100%;
 }
+
 .upload-status {
-  color: #888;
+  color: #8b6672;
 }
 </style>
