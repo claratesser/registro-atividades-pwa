@@ -184,7 +184,7 @@ function handleCancel() {
 
 .task-button {
   padding: 12px 20px;
-  background-color: #da7799;
+  background-color: #da7799; 
   color: white;
   border: none;
   border-radius: 8px;
